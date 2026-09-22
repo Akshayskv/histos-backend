@@ -2,6 +2,7 @@ package main
 
 import (
 	"histos-backend/database"
+	"histos-backend/util"
 	"log"
 	"net/http"
 )
@@ -14,9 +15,8 @@ func main() {
 		Addr:    ":8080",
 		Handler: mux,
 	}
-	psql := database.DatabaseConnection{
-		ConnectionString: "string",
-	}
+
+	psql := database.NewDatabseConnection(util.EnvironmentVariables.DATABASE_URL)
 
 	err := psql.Connect()
 

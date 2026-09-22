@@ -8,7 +8,9 @@ import (
 )
 
 type environmentVariables struct {
-	DATABASE_URL string
+	DATABASE_URL          string
+	JWT_SIGNING_ALGORITHM string
+	JWT_SIGNING_SECRET    string
 }
 
 var EnvironmentVariables = loadEnvironmentVars()
@@ -22,6 +24,16 @@ func loadEnvironmentVars() environmentVariables {
 
 	env.DATABASE_URL = os.Getenv("DATABASE_URL")
 	if env.DATABASE_URL == "" {
+		log.Fatal("required environment variable missing")
+	}
+
+	env.JWT_SIGNING_ALGORITHM = os.Getenv("JWT_SIGNING_ALGORITHM")
+	if env.JWT_SIGNING_ALGORITHM == "" {
+		log.Fatal("required environment variable missing")
+	}
+
+	env.JWT_SIGNING_SECRET = os.Getenv("JWT_SIGNING_SECRET")
+	if env.JWT_SIGNING_SECRET == "" {
 		log.Fatal("required environment variable missing")
 	}
 
